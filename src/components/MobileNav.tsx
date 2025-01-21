@@ -1,6 +1,6 @@
 "use client"
 
-import { SignInButton, SignOutButton, useAuth } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, useAuth, useUser } from "@clerk/nextjs";
 import { BellIcon, HomeIcon, LogOutIcon, MenuIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -11,7 +11,12 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui
 export default function MobileNav() {
     const [isOpen, setIsOpen] = useState(false);
     const { isSignedIn } = useAuth();
+    const { user } = useUser(); // Get the user object here
 
+    // Check if the user exists and handle cases where it's null or undefined
+    const profileLink = user
+        ? `/u/${user.username ?? user.emailAddresses[0].emailAddress.split("@")[0]}`
+        : undefined; // or provide an alternative behavior when the user is not available
 
     return (
         <div className="flex md:hidden items-center space-x-2">
@@ -54,16 +59,19 @@ export default function MobileNav() {
                                     </Link>
                                 </Button>
 
-                                <Button
-                                    variant={"ghost"}
-                                    className="flex items-center gap-3 justify-start"
-                                    asChild
-                                >
-                                    <Link href={"/profile"}>
-                                        <UserIcon className="size-4" />
-                                        Profile
-                                    </Link>
-                                </Button>
+                                {/* Conditionally render the profile link */}
+                                {profileLink && (
+                                    <Button
+                                        variant={"ghost"}
+                                        className="flex items-center gap-3 justify-start"
+                                        asChild
+                                    >
+                                        <Link href={profileLink}>
+                                            <UserIcon className="size-4" />
+                                            Profile
+                                        </Link>
+                                    </Button>
+                                )}
 
                                 <SignOutButton>
                                     <Button variant="ghost" className="flex items-center gap-3 justify-start w-full">
@@ -83,5 +91,5 @@ export default function MobileNav() {
                 </SheetContent>
             </Sheet>
         </div>
-    )
+    );
 }
