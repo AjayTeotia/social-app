@@ -7,6 +7,7 @@ import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import Search from "./Search";
 
 export default function MobileNav() {
     const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +20,7 @@ export default function MobileNav() {
         : undefined; // or provide an alternative behavior when the user is not available
 
     return (
-        <div className="flex md:hidden items-center space-x-2">
+        <div className="flex md:hidden items-center space-x-2">            
             <ThemeToggle />
 
             <Sheet open={isOpen} onOpenChange={setIsOpen}>

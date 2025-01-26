@@ -3,6 +3,7 @@ import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import { currentUser } from "@clerk/nextjs/server";
 import { SyncUser } from "@/action/user.action";
+import Search from "./Search";
 
 export default async function Navbar() {
     const user = await currentUser();
@@ -15,10 +16,12 @@ export default async function Navbar() {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo and title */}
                     <div className="flex items-center">
-                        <Link href="/" className="text-xl font-bold text-primary font-mono tracking-wider">
+                        <Link href="/" className="text-lg md:text-xl font-bold text-primary font-mono tracking-wider">
                             SocialApp
                         </Link>
                     </div>
+
+                    <Search />
 
                     {/* Desktop navigation */}
                     <DesktopNav />

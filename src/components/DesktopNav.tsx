@@ -4,6 +4,7 @@ import { BellIcon, HomeIcon, UserIcon } from "lucide-react"
 import Link from "next/link"
 import ThemeToggle from "./ThemeToggle"
 import { Button } from "./ui/button"
+import Search from "./Search"
 
 export default async function DesktopNav() {
     const user = await currentUser()

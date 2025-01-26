@@ -186,3 +186,26 @@ export async function toggleFollow(targetUserId: string) {
     return { success: false, error: "Error in toggle follow" };
   }
 }
+
+export async function getSearchUser(query: string) {
+  try {
+    return prisma.user.findMany({
+      where: {
+        username: {
+          contains: query,
+          mode: "insensitive",
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        image: true,
+      },
+      take: 5,
+    });
+  } catch (error) {
+    console.log("Error in getSearchUser: ", error);
+    return [];
+  }
+}
